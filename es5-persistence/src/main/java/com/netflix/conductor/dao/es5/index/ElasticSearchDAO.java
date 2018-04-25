@@ -357,7 +357,7 @@ public class ElasticSearchDAO implements IndexDAO {
 				
 			}catch(Exception e) {
 				Monitors.error(className, "index");
-				log.error("Indexing failed for {}, {}", request.index(), request.type(), e.getMessage());
+				log.error("Indexing failed for {}, {}", request.index(), request.type(), e);
 				retry--;
 				if(retry > 0) {
 					Uninterruptibles.sleepUninterruptibly(10, TimeUnit.MILLISECONDS);
