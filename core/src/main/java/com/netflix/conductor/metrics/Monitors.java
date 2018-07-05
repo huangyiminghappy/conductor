@@ -155,6 +155,10 @@ public class Monitors {
 		return sw;
 	}
 
+	public static void recordGauge(String name, long count, String... tags) {
+		gauge(classQualifier, name, count, tags);
+	}
+
 	public static void recordQueueWaitTime(String taskType, long queueWaitTime) {
 		getTimer(classQualifier, "task_queue_wait", "taskType", taskType).record(queueWaitTime, TimeUnit.MILLISECONDS);
 	}
@@ -231,4 +235,8 @@ public class Monitors {
 	public static void recordDaoPayloadSize(String dao, String action, int size) {
 	    gauge(classQualifier, "dao_payload_size", size, "dao", dao, "action", action);
     }
+
+	public static void recordDaoPayloadSize(String dao, String action, String taskType, String workflowType, int size) {
+		gauge(classQualifier, "dao_payload_size", size, "dao", dao, "action", action, "taskType", taskType, "workflowType", workflowType);
+	}
 }
