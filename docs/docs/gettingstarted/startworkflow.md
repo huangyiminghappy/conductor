@@ -11,6 +11,7 @@ When starting a Workflow execution with a registered definition, Workflow accept
 | taskToDomain | See [Task Domains](../../configuration/taskdomains/#task-domains) for more information. | optional |
 | workflowDef | Provide adhoc Workflow definition to run, without registering. See Dynamic Workflows below. | optional |
 | externalInputPayloadStoragePath | This is taken care of by Java client. See [External Payload Storage](../../externalpayloadstorage/) for more info. | optional |
+| priority | Priority level for the tasks within this workflow execution. Possible values are between 0 - 99. | optional |
 
 **Example:**
 
@@ -41,6 +42,7 @@ Send a `POST` request to `/workflow` with payload like:
   "name": "my_adhoc_unregistered_workflow",
   "workflowDef": {
     "ownerApp": "my_owner_app",
+    "ownerEmail": "my_owner_email@test.com",
     "createdBy": "my_username",
     "name": "my_adhoc_unregistered_workflow",
     "description": "Test Workflow setup",

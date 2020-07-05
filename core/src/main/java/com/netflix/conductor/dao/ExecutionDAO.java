@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Netflix, Inc.
+ * Copyright 2020 Netflix, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,9 @@
 package com.netflix.conductor.dao;
 
 import com.netflix.conductor.common.metadata.events.EventExecution;
-import com.netflix.conductor.common.metadata.tasks.PollData;
 import com.netflix.conductor.common.metadata.tasks.Task;
 import com.netflix.conductor.common.metadata.tasks.TaskDef;
-import com.netflix.conductor.common.metadata.tasks.TaskExecLog;
 import com.netflix.conductor.common.run.Workflow;
-import com.netflix.conductor.core.events.queue.Message;
-
 import java.util.List;
 
 /**
@@ -77,14 +73,6 @@ public interface ExecutionDAO {
 	 * @see TaskDef#concurrencyLimit()
 	 */
 	boolean exceedsInProgressLimit(Task task);
-
-	/**
-	 * Checks if the Task is rate limited or not based on the {@link Task#getRateLimitPerFrequency()} and {@link Task#getRateLimitFrequencyInSeconds()}
-	 * @param task: which needs to be evaluated whether it is rateLimited or not
-	 * @return true: If the {@link Task} is rateLimited
-	 * 		false: If the {@link Task} is not rateLimited
-	 */
-	boolean exceedsRateLimitPerFrequency(Task task);
 	
 	/**
 	 * 
@@ -233,7 +221,7 @@ public interface ExecutionDAO {
 	 * @return true if the event was added.  false otherwise when the event by id is already already stored.
 	 */
 	boolean addEventExecution(EventExecution ee);
-	
+
 	/**
 	 * 
 	 * @param ee Event execution to be updated
@@ -245,21 +233,4 @@ public interface ExecutionDAO {
 	 * @param ee Event execution to be removed
 	 */
 	void removeEventExecution(EventExecution ee);
-
-	/**
-	 * 
-	 * @param eventHandlerName Name of the event handler
-	 * @param eventName Event Name
-	 * @param messageId ID of the message received
-	 * @param max max number of executions to return
-	 * @return list of matching events
-	 */
-	List<EventExecution> getEventExecutions(String eventHandlerName, String eventName, String messageId, int max);
-	
-	void updateLastPoll(String taskDefName, String domain, String workerId);
-	
-	PollData getPollData(String taskDefName, String domain);
-
-	List<PollData> getPollData(String taskDefName);
-
 }
